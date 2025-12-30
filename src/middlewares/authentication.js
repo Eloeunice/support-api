@@ -1,4 +1,4 @@
-import { prisma } from "../controllers/ticket.controller.js";
+import prisma from "../database/prisma.js";
 
 
 export async function authorizeLogin(req, res, next) {

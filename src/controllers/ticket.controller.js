@@ -1,7 +1,4 @@
-import { PrismaClient } from '../generated/prisma/index.js';
-
-export const prisma = new PrismaClient()
-
+import prisma from "../database/prisma.js";
 export async function createTicket(req, res) {
     const { equipment, description } = req.body
 
@@ -18,7 +15,7 @@ export async function createTicket(req, res) {
 
 export async function getTickets(req, res) {
     const status = req.query.status
-    const tickets = await prisma.ticket.findMany({ status: status })
+    const tickets = await prisma.ticket.findMany({ where: status ? { status } : {} })
     return res.status(200).json(tickets)
 }
 export async function updateTicket(req, res) {
@@ -62,8 +59,5 @@ export async function deleteTicket(req, res) {
             id: Number(id)
         }
     })
-    return res.status(204).json({
-        "message": "Ticket deletado com sucesso",
-        "ticket": ticket
-    })
+    return res.status(204).send()
 }

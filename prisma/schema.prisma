@@ -17,8 +17,8 @@ datasource db {
 
 model User {
   id    Int     @default(autoincrement()) @id
-  name String  
-  password  String?
+  name String  @unique
+  password  String
 
   tickets Ticket[]
 }
