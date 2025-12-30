@@ -1,32 +1,23 @@
-import e from "express";
-import { createTicket, deleteTicket, getTickets, updateTicket } from "../controllers/ticket.controller";
+import express from "express";
+import {
+    createTicket,
+    deleteTicket,
+    getTickets,
+    updateTicket,
+    closeTicket
+} from "../controllers/ticket.controller.js";
 
-const tickets = e.Router()
+const tickets = express.Router();
 
-tickets.route('/')
-    .post((req, res) => {
-        createTicket(req, res)
-        res.send('Ticket Criado!')
-    })
+// coleção
+tickets.post('/', createTicket);
+tickets.get('/', getTickets);
 
-    .get((req, res) => {
-        getTickets(req, res)
-        res.send('Ticket Listado!')
-    })
+// recurso por id
+tickets.put('/:id', updateTicket);
+tickets.delete('/:id', deleteTicket);
 
-    .put('/:id', (req, res) => {
-        updateTicket(req, res)
-        res.send('Ticket Atualizado!')
-    })
+// ação específica
+tickets.patch('/:id/status', closeTicket);
 
-    .delete('/:id', (req, res) => {
-        deleteTicket(req, res)
-        res.send('Ticket Deletado!')
-    })
-
-    .patch('/:id/status', (req, res) => {
-        closeTicket(req, res)
-        res.send('Ticket Fechado!')
-    })
-
-export default tickets
+export default tickets;
